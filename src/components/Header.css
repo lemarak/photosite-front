@@ -1,0 +1,33 @@
+header {
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  height: 80px;
+  width: 100%;
+  color: white;
+  background-color: var(--ps-black);
+}
+
+.header-container {
+  width: 1240px;
+  margin: 0 auto;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+header ul li {
+  margin-left: 30px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+header li:hover {
+  font-weight: 700;
+}
