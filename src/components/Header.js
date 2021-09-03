@@ -3,7 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ token }) => {
+  // Render
   return (
     <header>
       <div className="header-container">
