@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-const Header = ({ token, setUser }) => {
+const Header = ({ token, setUser, slug }) => {
   // Render
   return (
     <header>
@@ -34,7 +34,7 @@ const Header = ({ token, setUser }) => {
           ) : (
             <ul>
               <li>
-                <Link to="/profile">Mon profil</Link>
+                <Link to={`/profile/${slug}`}>Mon profil</Link>
               </li>
               <li
                 onClick={() => {

@@ -24,14 +24,42 @@ const Profile = ({ token }) => {
         `${process.env.REACT_APP_PATH_SERVER}/user/${params.slug}`
       );
       console.log(response.data);
+      const data = response.data;
+      setEmail(data.email);
+      setUsername(data.account.username);
+      setLastname(data.account.lastname);
+      setFirstname(data.account.firstname);
+      setCity(data.account.city);
+      setPhone(data.account.phone);
     };
     fetchData();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-    } catch (error) {}
+      const formData = new FormData();
+      formData.append("firstname", firstname);
+      formData.append("lastname", lastname);
+      formData.append("city", city);
+      formData.append("phone", phone);
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_PATH_SERVER}/user/update/`,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Update OK");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   // Render
@@ -45,7 +73,7 @@ const Profile = ({ token }) => {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          placeHolder="Email"
+          placeholder="Email"
         />
         <input
           type="text"
@@ -53,7 +81,7 @@ const Profile = ({ token }) => {
           onChange={(e) => {
             setUsername(e.target.value);
           }}
-          placeHolder="Nom d'utilisateur"
+          placeholder="Nom d'utilisateur"
         />
         <input
           type="text"
@@ -61,7 +89,7 @@ const Profile = ({ token }) => {
           onChange={(e) => {
             setLastname(e.target.value);
           }}
-          placeHolder="Nom"
+          placeholder="Nom"
         />
         <input
           type="text"
@@ -69,7 +97,7 @@ const Profile = ({ token }) => {
           onChange={(e) => {
             setFirstname(e.target.value);
           }}
-          placeHolder="Prénom"
+          placeholder="Prénom"
         />
         <input
           type="text"
@@ -77,7 +105,7 @@ const Profile = ({ token }) => {
           onChange={(e) => {
             setCity(e.target.value);
           }}
-          placeHolder="Ville"
+          placeholder="Ville"
         />
         <input
           type="text"
@@ -85,7 +113,7 @@ const Profile = ({ token }) => {
           onChange={(e) => {
             setPhone(e.target.value);
           }}
-          placeHolder="Téléphone"
+          placeholder="Téléphone"
         />
 
         <span className="message-error">{messageError}</span>

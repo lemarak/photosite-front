@@ -29,10 +29,10 @@ const Signup = ({ setUser }) => {
         );
         if (response.data.token) {
           setMessageError("");
-          setUser(response.data.token);
+          setUser(response.data.token, response.data.account.slug);
           history.push("/");
         } else {
-          setUser("");
+          setUser("", "");
         }
       }
     } catch (error) {
@@ -58,7 +58,7 @@ const Signup = ({ setUser }) => {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          placeHolder="Email"
+          placeholder="Email"
         />
         <input
           type="text"
@@ -66,7 +66,7 @@ const Signup = ({ setUser }) => {
           onChange={(e) => {
             setUsername(e.target.value);
           }}
-          placeHolder="Nom d'utilisateur"
+          placeholder="Nom d'utilisateur"
         />
         <input
           type="password"
@@ -74,7 +74,7 @@ const Signup = ({ setUser }) => {
           onChange={(e) => {
             setPassword1(e.target.value);
           }}
-          placeHolder="Mot de passe"
+          placeholder="Mot de passe"
         />
         <input
           type="password"
@@ -82,7 +82,7 @@ const Signup = ({ setUser }) => {
           onChange={(e) => {
             setPassword2(e.target.value);
           }}
-          placeHolder="Confirmer mot de passe"
+          placeholder="Confirmer mot de passe"
         />
         <span className="message-error">{messageError}</span>
         <button type="submit">S'inscrire</button>

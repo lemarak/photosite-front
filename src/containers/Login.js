@@ -23,11 +23,11 @@ const Login = ({ setUser }) => {
         );
         if (response.status === 200) {
           setMessageError("");
-          setUser(response.data.token);
+          setUser(response.data.user.token, response.data.user.account.slug);
           history.push("/");
         } else {
           setMessageError("*Identifiants incorrects");
-          setUser("");
+          setUser("", "");
         }
       }
     } catch (error) {
@@ -45,7 +45,7 @@ const Login = ({ setUser }) => {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          placeHolder="Email"
+          placeholder="Email"
         />
 
         <input
@@ -54,7 +54,7 @@ const Login = ({ setUser }) => {
           onChange={(e) => {
             setPassword(e.target.value);
           }}
-          placeHolder="Mot de passe"
+          placeholder="Mot de passe"
         />
         <span className="message-error">{messageError}</span>
         <button type="submit">Se connecter</button>

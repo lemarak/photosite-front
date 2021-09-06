@@ -16,21 +16,26 @@ require("dotenv").config();
 
 function App() {
   const [token, setToken] = useState(Cookies.get("token") || null);
+  const [slug, setSlug] = useState(Cookies.get("slug") || null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const setUser = (token) => {
+  const setUser = (token, slug) => {
     if (token) {
       setToken(token);
+      setSlug(slug);
       Cookies.set("token", token);
+      Cookies.set("slug", slug);
     } else {
       setToken(null);
+      setSlug(null);
       Cookies.remove("token");
+      Cookies.remove("slug");
     }
   };
 
   return (
     <Router>
-      <Header token={token} setUser={setUser} />
+      <Header token={token} setUser={setUser} slug={slug} />
       <Switch>
         <Route exact path="/">
           <Home />
@@ -41,7 +46,7 @@ function App() {
         <Route path="/login">
           <Login setUser={setUser} />
         </Route>
-        <Route path="/profile">
+        <Route path="/profile/:slug">
           <Profile token={token} />
         </Route>
         <Route path="/gallery">
