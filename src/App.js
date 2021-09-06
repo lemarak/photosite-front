@@ -30,19 +30,19 @@ function App() {
 
   return (
     <Router>
-      <Header token={token} />
+      <Header token={token} setUser={setUser} />
       <Switch>
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/signup" setUser={setUser}>
-          <Signup />
+        <Route path="/signup">
+          <Signup setUser={setUser} />
         </Route>
-        <Route path="/login" setUser={setUser}>
-          <Login />
+        <Route path="/login">
+          <Login setUser={setUser} />
         </Route>
         <Route path="/profile">
-          <Profile />
+          <Profile token={token} />
         </Route>
         <Route path="/gallery">
           <Gallery />

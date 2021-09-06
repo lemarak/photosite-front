@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import "./Signup.css";
 
-const Signup = () => {
+const Signup = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password1, setPassword1] = useState("");
@@ -17,29 +17,32 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
+      console.log("coucou");
       if (!email || !username || !password1 || !password2) {
-        setMessageError("Tous les champs doivent être saisis");
+        setMessageError("* Tous les champs doivent être saisis");
       } else if (password1 !== password2) {
-        setMessageError("Les mots de passe ne correspondent pas !");
+        setMessageError("* Les mots de passe ne correspondent pas !");
       } else {
-        console.log(`${process.env.REACT_APP_PATH_SERVER}/user/signup`);
         const response = await axios.post(
           `${process.env.REACT_APP_PATH_SERVER}/user/signup`,
           { email, username, password: password1 }
         );
         if (response.data.token) {
           setMessageError("");
-          setUsername(response.data.token);
+          setUser(response.data.token);
           history.push("/");
+        } else {
+          setUser("");
         }
       }
     } catch (error) {
       console.log(error);
-      // if (error.response.status === 409) {
-      //   setMessageError(
-      //     "Cet email/nom d'utilisateur a déjà un compte chez nous !"
-      //   );
-      // }
+      if (error.response.status === 409) {
+        setMessageError(
+          "* Cet email/nom d'utilisateur a déjà un compte chez nous !"
+        );
+        setUser("");
+      }
       console.log(error.message);
     }
   };
@@ -47,8 +50,8 @@ const Signup = () => {
   // Render
   return (
     <div className="container">
-      <h1>Signup</h1>
       <form className="signup-form" onSubmit={handleSubmit}>
+        <h1>Inscription</h1>
         <input
           type="email"
           value={email}
@@ -81,7 +84,7 @@ const Signup = () => {
           }}
           placeHolder="Confirmer mot de passe"
         />
-        <span className="message-error">* {messageError}</span>
+        <span className="message-error">{messageError}</span>
         <button type="submit">S'inscrire</button>
         <Link to="/login">Vous avez déjà un compte ? Connectez-vous !</Link>
       </form>

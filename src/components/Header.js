@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-const Header = ({ token }) => {
+const Header = ({ token, setUser }) => {
   // Render
   return (
     <header>
@@ -22,17 +22,29 @@ const Header = ({ token }) => {
           </ul>
         </nav>
         <nav>
-          <ul>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li>
-              <Link to="/profile">Mon profil</Link>
-            </li>
-          </ul>
+          {!token ? (
+            <ul>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+            </ul>
+          ) : (
+            <ul>
+              <li>
+                <Link to="/profile">Mon profil</Link>
+              </li>
+              <li
+                onClick={() => {
+                  setUser("");
+                }}
+              >
+                Se déconnecter
+              </li>
+            </ul>
+          )}
         </nav>
       </div>
     </header>
