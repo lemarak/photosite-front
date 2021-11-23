@@ -1,15 +1,13 @@
 /* Other rules */
-
-:root {
-  --ps-black: #191919;
-  --ps-grey: #b2b2b2;
-  --ps-lightGrey: #c5c5c5;
-}
+@import "variables";
+// $ps-black: #191919;
+// $ps-grey: #b2b2b2;
+// $ps-lightGrey: #c5c5c5;
 
 body {
   font-family: "Open Sans", sans-serif;
-  background-color: var(--ps-lightGrey);
-  color: var(--ps-black);
+  background-color: $ps-lightGrey;
+  color: $ps-black;
 }
 
 .container {
@@ -32,17 +30,17 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
-.user-form input {
-  width: 300px;
-  height: 30px;
-  margin: 20px 0;
-  border: none;
-  border-bottom: 1px solid black;
-  padding: 0 6px;
-  font-size: 1.1rem;
-  border-radius: 6px;
+  input {
+    width: 300px;
+    height: 30px;
+    margin: 20px 0;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0 6px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+  }
 }
 
 .user-form button {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Outing.css";
+import "./Outing.module.scss";
 
 const Outing = () => {
   // Render

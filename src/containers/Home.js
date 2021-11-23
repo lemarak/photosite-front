@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Home.css";
+import "./Home.module.scss";
 
 const Home = () => {
   // Render

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Gallery.css";
+import "./Gallery.module.scss";
 
 const Gallery = () => {
   // Render

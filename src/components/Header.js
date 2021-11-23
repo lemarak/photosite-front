@@ -1,13 +1,13 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import "./Header.css";
+import Style from "./Header.module.scss";
 
 const Header = ({ token, setUser, slug }) => {
   // Render
   return (
     <header>
-      <div className="header-container">
+      <div className={Style.container}>
         <Link to="/">
           <p>PhotoSite</p>
         </Link>
