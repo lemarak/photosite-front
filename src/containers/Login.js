@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import "./Signup.css";
-
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +35,7 @@ const Login = ({ setUser }) => {
   // Render
   return (
     <div className="container">
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="user-form" onSubmit={handleSubmit}>
         <h1>Connexion</h1>
         <input
           type="email"

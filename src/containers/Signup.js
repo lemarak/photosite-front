@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
-import "./Signup.css";
-
 const Signup = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -50,7 +48,7 @@ const Signup = ({ setUser }) => {
   // Render
   return (
     <div className="container">
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="user-form" onSubmit={handleSubmit}>
         <h1>Inscription</h1>
         <input
           type="email"

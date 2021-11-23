@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, Redirect, useHistory } from "react-router-dom";
 import axios from "axios";
 
-import "./Profile.css";
-
 const Profile = ({ token }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState("");
@@ -66,7 +64,7 @@ const Profile = ({ token }) => {
   return token ? (
     <div className="container">
       <h1>Mon profil</h1>
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="user-form" onSubmit={handleSubmit}>
         <input
           type="email"
           value={email}
