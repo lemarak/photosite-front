@@ -1,29 +1,53 @@
 import React, { useState } from "react";
-
 import axios from "axios";
+import { Formik, Field } from "formik";
+import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 
+// components
+import InputForm from "../components/Form/InputForm";
+
 const Signup = ({ setUser }) => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
+  // states
   const [messageError, setMessageError] = useState("");
 
   const history = useHistory();
 
-  const handleSubmit = async (event) => {
+  // default values Formik
+  const getDefaultValues = {
+    email: "",
+    username: "",
+    password1: "",
+    password2: "",
+  };
+
+  // fields validation Yup
+  const userSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("*Email incorrect")
+      .required("*Email obligatoire"),
+    username: Yup.string()
+      .min(3, "*Le pseudo est trop court")
+      .max(49, "*Le pseudo est trop long")
+      .required("*Le pseudo est obligatoire"),
+    password1: Yup.string()
+      .min(6, "*Mot de passe trop court")
+      .required("*Le mot de passe est requis"),
+    password2: Yup.string()
+      .min(6, "*Mot de passe trop court")
+      .required("*Le mot de passe est requis"),
+  });
+
+  // submit form
+  const submit = async (values, actions) => {
     try {
-      event.preventDefault();
-      console.log("coucou");
-      if (!email || !username || !password1 || !password2) {
-        setMessageError("* Tous les champs doivent être saisis");
-      } else if (password1 !== password2) {
-        setMessageError("* Les mots de passe ne correspondent pas !");
+      const { email, username } = { ...values };
+      if (values.password1 !== values.password2) {
+        setMessageError("*Les mots de passe ne correspondent pas !");
       } else {
         const response = await axios.post(
           `${process.env.REACT_APP_PATH_SERVER}/user/signup`,
-          { email, username, password: password1 }
+          { email, username, password: values.password1 }
         );
         if (response.data.token) {
           setMessageError("");
@@ -37,9 +61,10 @@ const Signup = ({ setUser }) => {
       console.log(error);
       if (error.response.status === 409) {
         setMessageError(
-          "* Cet email/nom d'utilisateur a déjà un compte chez nous !"
+          "*Cet email/nom d'utilisateur a déjà un compte chez nous !"
         );
         setUser("");
+        actions.setSubmitting(false);
       }
       console.log(error.message);
     }
@@ -48,44 +73,56 @@ const Signup = ({ setUser }) => {
   // Render
   return (
     <div className="container">
-      <form className="user-form" onSubmit={handleSubmit}>
-        <h1>Inscription</h1>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          placeholder="Email"
-        />
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-          placeholder="Nom d'utilisateur"
-        />
-        <input
-          type="password"
-          value={password1}
-          onChange={(e) => {
-            setPassword1(e.target.value);
-          }}
-          placeholder="Mot de passe"
-        />
-        <input
-          type="password"
-          value={password2}
-          onChange={(e) => {
-            setPassword2(e.target.value);
-          }}
-          placeholder="Confirmer mot de passe"
-        />
-        <span className="message-error">{messageError}</span>
-        <button type="submit">S'inscrire</button>
-        <Link to="/login">Vous avez déjà un compte ? Connectez-vous !</Link>
-      </form>
+      <Formik
+        onSubmit={submit}
+        initialValues={getDefaultValues}
+        validationSchema={userSchema}
+        validateOnBlur={true}
+        validateOnChange={false}
+      >
+        {({
+          values,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          errors,
+          touched,
+        }) => (
+          <form className="user-form" onSubmit={handleSubmit}>
+            <h1>Inscription</h1>
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email"
+              component={InputForm}
+            />
+            <Field
+              name="username"
+              type="text"
+              placeholder="Pseudo"
+              component={InputForm}
+            />
+            <Field
+              name="password1"
+              type="password"
+              placeholder="Mot de passe"
+              component={InputForm}
+            />
+            <Field
+              name="password2"
+              type="password"
+              placeholder="Vérification Mot de passe"
+              component={InputForm}
+            />
+            {messageError ? (
+              <span className="message-error">{messageError}</span>
+            ) : null}
+            <button type="submit">S'inscrire</button>
+            <Link to="/login">Vous avez déjà un compte ? Connectez-vous !</Link>
+          </form>
+        )}
+      </Formik>
     </div>
   );
 };

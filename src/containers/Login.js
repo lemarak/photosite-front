@@ -28,7 +28,6 @@ const Login = ({ setUser }) => {
 
   // submit Form
   const submit = async (values, actions) => {
-    console.log("coucou");
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_PATH_SERVER}/user/login`,
@@ -38,12 +37,11 @@ const Login = ({ setUser }) => {
         setMessageError("");
         setUser(response.data.user.token, response.data.user.account.slug);
         history.push("/");
-      } else {
-        setMessageError("*Identifiants incorrects");
-        setUser("", "");
-        actions.setSubmitting(false);
       }
     } catch (error) {
+      setMessageError("*Identifiants incorrects");
+      setUser("", "");
+      actions.setSubmitting(false);
       console.log(error.message);
     }
   };
@@ -69,45 +67,27 @@ const Login = ({ setUser }) => {
         }) => (
           <form className="user-form" onSubmit={handleSubmit}>
             <h1>Connexion</h1>
-            <span className="message-error">{messageError}</span>
-            <Field
-              name="email"
-              type="email"
-              placeholder="Email"
-              component={InputForm}
-            />
-            {/* <input
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name="email"
-              placeholder="Email"
-            /> */}
-            {/* {errors.email && touched.email ? (
-              <span className="message-error">{errors.email}</span>
-            ) : null} */}
-            <Field
-              name="password"
-              type="password"
-              placeholder="Mot de passe"
-              component={InputForm}
-            />
-            {/* <input
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name="password"
-              placeholder="Mot de passe"
-            /> */}
-            {/* {errors.password && touched.password ? (
-              <span className="message-error">{errors.password}</span>
-            ) : null} */}
 
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email"
+              component={InputForm}
+            />
+
+            <Field
+              name="password"
+              type="password"
+              placeholder="Mot de passe"
+              component={InputForm}
+            />
+            {messageError ? (
+              <span className="message-error">{messageError}</span>
+            ) : null}
             <button type="submit" disabled={isSubmitting}>
               Se connecter
             </button>
+
             <Link to="/signup">
               Vous n'avez pas de compte ? Inscrivez-vous !
             </Link>
