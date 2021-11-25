@@ -35,27 +35,28 @@ const Signup = ({ setUser }) => {
       .required("*Le mot de passe est requis"),
     password2: Yup.string()
       .min(6, "*Mot de passe trop court")
-      .required("*Le mot de passe est requis"),
+      .required("*Le mot de passe est requis")
+      .oneOf(
+        [Yup.ref("password1"), null],
+        "*Les mots de passe ne correspondent pas !"
+      ),
   });
 
   // submit form
   const submit = async (values, actions) => {
     try {
       const { email, username } = { ...values };
-      if (values.password1 !== values.password2) {
-        setMessageError("*Les mots de passe ne correspondent pas !");
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_PATH_SERVER}/user/signup`,
+        { email, username, password: values.password1 }
+      );
+      if (response.data.token) {
+        setMessageError("");
+        setUser(response.data.token, response.data.account.slug);
+        history.push("/");
       } else {
-        const response = await axios.post(
-          `${process.env.REACT_APP_PATH_SERVER}/user/signup`,
-          { email, username, password: values.password1 }
-        );
-        if (response.data.token) {
-          setMessageError("");
-          setUser(response.data.token, response.data.account.slug);
-          history.push("/");
-        } else {
-          setUser("", "");
-        }
+        setUser("", "");
       }
     } catch (error) {
       console.log(error);
@@ -112,7 +113,7 @@ const Signup = ({ setUser }) => {
             <Field
               name="password2"
               type="password"
-              placeholder="Vérification Mot de passe"
+              placeholder="Confirmer Mot de passe"
               component={InputForm}
             />
             {messageError ? (
