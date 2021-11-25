@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 
+import "./conf/axios-conf";
+
 import Header from "./components/Header";
 import Home from "./containers/Home";
 import Signup from "./containers/Signup";

@@ -29,10 +29,7 @@ const Login = ({ setUser }) => {
   // submit Form
   const submit = async (values, actions) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_PATH_SERVER}/user/login`,
-        { ...values }
-      );
+      const response = await axios.post("/user/login", { ...values });
       if (response.status === 200) {
         setMessageError("");
         setUser(response.data.user.token, response.data.user.account.slug);

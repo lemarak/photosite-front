@@ -18,9 +18,7 @@ const Profile = ({ token }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_PATH_SERVER}/user/${params.slug}`
-      );
+      const response = await axios.get(`/user/${params.slug}`);
       console.log(response.data);
       const data = response.data;
       setEmail(data.email);
@@ -42,16 +40,12 @@ const Profile = ({ token }) => {
       formData.append("city", city);
       formData.append("phone", phone);
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_PATH_SERVER}/user/update/`,
-        formData,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post("/user/update/", formData, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
         console.log("Update OK");
       }

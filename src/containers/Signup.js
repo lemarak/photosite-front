@@ -47,10 +47,11 @@ const Signup = ({ setUser }) => {
     try {
       const { email, username } = { ...values };
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_PATH_SERVER}/user/signup`,
-        { email, username, password: values.password1 }
-      );
+      const response = await axios.post("/user/signup", {
+        email,
+        username,
+        password: values.password1,
+      });
       if (response.data.token) {
         setMessageError("");
         setUser(response.data.token, response.data.account.slug);
