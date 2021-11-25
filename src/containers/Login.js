@@ -4,6 +4,9 @@ import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 
+// components
+import InputForm from "../components/Form/InputForm";
+
 const Login = ({ setUser }) => {
   // states
   // const [email, setEmail] = useState("");
@@ -67,28 +70,40 @@ const Login = ({ setUser }) => {
           <form className="user-form" onSubmit={handleSubmit}>
             <h1>Connexion</h1>
             <span className="message-error">{messageError}</span>
-            <input
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email"
+              component={InputForm}
+            />
+            {/* <input
               type="email"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
               name="email"
               placeholder="Email"
-            />
-            {errors.email && touched.email ? (
+            /> */}
+            {/* {errors.email && touched.email ? (
               <span className="message-error">{errors.email}</span>
-            ) : null}
-            <input
+            ) : null} */}
+            <Field
+              name="password"
+              type="password"
+              placeholder="Mot de passe"
+              component={InputForm}
+            />
+            {/* <input
               type="password"
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
               name="password"
               placeholder="Mot de passe"
-            />
-            {errors.password && touched.password ? (
+            /> */}
+            {/* {errors.password && touched.password ? (
               <span className="message-error">{errors.password}</span>
-            ) : null}
+            ) : null} */}
 
             <button type="submit" disabled={isSubmitting}>
               Se connecter
