@@ -1,7 +1,7 @@
 import "./App.scss";
 
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import "./conf/axios-conf";
@@ -38,26 +38,14 @@ function App() {
   return (
     <Router>
       <Header token={token} setUser={setUser} slug={slug} />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/signup">
-          <Signup setUser={setUser} />
-        </Route>
-        <Route path="/login">
-          <Login setUser={setUser} />
-        </Route>
-        <Route path="/profile/:slug">
-          <Profile token={token} />
-        </Route>
-        <Route path="/gallery">
-          <Gallery />
-        </Route>
-        <Route path="/outing">
-          <Outing />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup setUser={setUser} />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/profile/:slug" element={<Profile token={token} />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/outing" element={<Outing />} />
+      </Routes>
     </Router>
   );
 }

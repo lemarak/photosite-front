@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Redirect, useHistory } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = ({ token }) => {
@@ -14,7 +14,6 @@ const Profile = ({ token }) => {
   const [messageError, setMessageError] = useState("");
 
   const params = useParams();
-  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,7 +112,7 @@ const Profile = ({ token }) => {
       </form>
     </div>
   ) : (
-    <Redirect to={{ pathname: "/login", state: { fromPublish: true } }} />
+    <Navigate to={{ pathname: "/login", state: { fromPublish: true } }} />
   );
 };
 

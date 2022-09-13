@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // components
 import InputForm from "../components/Form/InputForm";
@@ -11,7 +11,7 @@ const Signup = ({ setUser }) => {
   // states
   const [messageError, setMessageError] = useState("");
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // default values Formik
   const getDefaultValues = {
@@ -55,7 +55,7 @@ const Signup = ({ setUser }) => {
       if (response.data.token) {
         setMessageError("");
         setUser(response.data.token, response.data.account.slug);
-        history.push("/");
+        navigate("/");
       } else {
         setUser("", "");
       }

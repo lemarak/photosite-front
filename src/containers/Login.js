@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // components
 import InputForm from "../components/Form/InputForm";
@@ -13,8 +13,8 @@ const Login = ({ setUser }) => {
   // const [password, setPassword] = useState("");
   const [messageError, setMessageError] = useState("");
 
-  // history
-  const history = useHistory();
+  // navigate
+  const navigate = useNavigate();
 
   // validation with Yup
   const userSchema = Yup.object().shape({
@@ -33,7 +33,7 @@ const Login = ({ setUser }) => {
       if (response.status === 200) {
         setMessageError("");
         setUser(response.data.user.token, response.data.user.account.slug);
-        history.push("/");
+        navigate("/");
       }
     } catch (error) {
       setMessageError("*Identifiants incorrects");
